@@ -1,23 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
+import NoteLogger from './NoteLogger';
+import ClickLogger from './ClickLogger';
+import ToggleSymptom from './ToggleSymptom';
 
 function App() {
+  //Which things were experienced today
+  const dailyStats = [
+    { type: "Tired", experiencedToday: true},
+    { type: "Headache", experiencedToday: true},
+    { type: "Exercised", experiencedToday: true},
+    { type: "Sick", experiencedToday: true}
+  ];
+
+  //Log a note
+  let [notesList, setNotesList] = useState([]);
+  let [newNote, setNewNote] = useState("");
+
+  const handleNoteSubmitting = (event) => {
+    setNewNote=(event.target.value);
+  }
+  const addNote = () => {
+    const newNotesList = [...notesList, newNote];
+    setNotesList(newNotesList);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ToggleSymptom />
+      <ClickLogger />
+      <NoteLogger />
+
+      {/* <b>Experienced Today</b>
+      {// Show which daily stats were experienced today
+      dailyStats.map(
+        (stat, key) => stat.experiencedToday && <ul>{stat.type}</ul>
+      )}
+
+      <br />
+      Log Note <input onChange={handleNoteSubmitting} />
+      <button onClick={addNote}>Add Note</button> */}
     </div>
   );
 }
