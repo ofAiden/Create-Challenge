@@ -1,39 +1,47 @@
-import { useState } from "react";
+import './App.css';
+import {useState} from 'react';
+import NoteLogger from './NoteLogger';
+import ClickLogger from './ClickLogger';
+import ToggleSymptom from './ToggleSymptom';
 
-export default function Logger() {
-  const [text, setText] = useState("");
-  const [logs, setLogs] = useState([]);
-  
-  const Submit = () => {
-    if (text.trim() !== "") {
-      setLogs([...logs, text]);
-      setText("");
-    }
-  };
-  const Clear = () => {
-    if (setLogs != null){
-      setLogs([]);
-    }
+function App() {
+  //Which things were experienced today
+  const dailyStats = [
+    { type: "Tired", experiencedToday: true},
+    { type: "Headache", experiencedToday: true},
+    { type: "Exercised", experiencedToday: true},
+    { type: "Sick", experiencedToday: true}
+  ];
+
+  //Log a note
+  let [notesList, setNotesList] = useState([]);
+  let [newNote, setNewNote] = useState("");
+
+  const handleNoteSubmitting = (event) => {
+    setNewNote=(event.target.value);
+  }
+  const addNote = () => {
+    const newNotesList = [...notesList, newNote];
+    setNotesList(newNotesList);
   }
 
   return (
-    <div>
-      <input
-        value={text}
-        onChange={(words) => setText(words.target.value)}
-        placeholder="Enter log message"
-      />
-      <button onClick={Submit}>Submit</button>
-      <button onClick={Clear}>Clear</button>
-      <div>
-        {logs.length === 0 ? (
-          <p>No logs yet</p>
-        ) : (
-          logs.map((log, index) => (
-            <div key={index}>{log}</div>
-          ))
-        )}
-      </div>
+    <div className="App">
+      <ToggleSymptom />
+      <ClickLogger />
+      <NoteLogger />
+
+      {/* <b>Experienced Today</b>
+      {// Show which daily stats were experienced today
+      dailyStats.map(
+        (stat, key) => stat.experiencedToday && <ul>{stat.type}</ul>
+      )}
+
+      <br />
+      Log Note <input onChange={handleNoteSubmitting} />
+      <button onClick={addNote}>Add Note</button> */}
     </div>
   );
 }
+
+export default App;
