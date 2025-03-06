@@ -1,8 +1,10 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { DailyLog } from './pages/DailyLog';
+import { NotesPage } from './pages/NotesPage';
+import { DoctorQuestions } from './pages/DoctorQsPage';
+import { Medicine } from './pages/MedicinePage';
 import {useState} from 'react';
-import NoteLogger from './NoteLogger';
-import ClickLogger from './ClickLogger';
-import ToggleSymptom from './ToggleSymptom';
 
 function App() {
   //Which things were experienced today
@@ -27,9 +29,22 @@ function App() {
 
   return (
     <div className="App">
-      <ToggleSymptom />
-      <ClickLogger />
-      <NoteLogger />
+      <Router>
+        <div>
+          <Link to="/">Daily Log</Link>
+          <Link to="/notes">Notes</Link>
+          <Link to="/medicine">Medicine</Link>
+          <Link to="/doctorquestions">Doctor Questions</Link>
+        </div>
+        <Routes>
+          <Route path="/" element={<DailyLog />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/medicine" element={<Medicine />} />
+          <Route path="/doctorquestions" element={<DoctorQuestions />} />
+
+          <Route path="*" element={ <h1>Page not found</h1> } />
+        </Routes>
+      </Router>
 
       {/* <b>Experienced Today</b>
       {// Show which daily stats were experienced today

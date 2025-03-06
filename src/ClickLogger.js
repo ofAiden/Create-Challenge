@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 export default function ClickLogger() {
-    //Edit the number of chest pains
+    //functions to edit the number of chest pains
     let [chestPains, setChestPains]=useState(0);
+    
     const increaseChestPains = () => {
     setChestPains(chestPains + 1);
     };
